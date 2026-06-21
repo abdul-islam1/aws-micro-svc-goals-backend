@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
+const PORT = process.env.PORT || 5001;
+
 const Goal = require('./models/goal');
 
 const app = express();
@@ -89,7 +91,11 @@ const connectDB = async () => {
     const mongoURI = `mongodb+srv://${process.env.DATABASE_USERNAME}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_URL}/${process.env.DATABASE_NAME}?authSource=admin`;
     const conn = await mongoose.connect(mongoURI);
     console.log('MongoDB Connected...!');
-      app.listen(5001);
+  
+     app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+    
   } catch (error) {
     console.error(`Database connection error: ${error.message}`);
     process.exit(1); 
